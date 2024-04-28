@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Map of Aids for Disabled People in India using Leaflet</title>
+<style>
+    /* Set the dimensions of the map container */
+    #map {
+        height: 600px;
+        width: 100%;
+    }
+</style>
+</head>
+<body>
+
+
+<!-- Create a container for the map -->
+<div id="map"></div>
+
+<!-- Include the Leaflet library -->
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+
+<script>
+// Initialize the map
+var map = L.map('map').setView([20.5937, 78.9629], 5); // Set the center of the map to India, and zoom level to 5
+
+// Add the OpenStreetMap base layer
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(map);
+
+// Data for aids (name, position, icon)
+var aids = [
+  { name: 'Wheelchair Ramp', lat: 28.6139, lng: 77.2090, icon: 'disability.png' }, // New Delhi
+  { name: 'Accessible Restroom', lat: 19.0760, lng: 72.8777, icon: 'toilet.png' }, // Mumbai
+  { name: 'Handicap Parking', lat: 17.3850, lng: 78.4867, icon: 'park.png' }, // Hyderabad
+  { name: 'Wheelchair Ramp', lat: 30.6139, lng: 85.2090, icon: 'disability.png' },
+  { name: 'Assistive Listening Devices', lat: 12.9716, lng: 77.5946, icon: 'device.png' }, // Bangalore
+  { name: 'Accessible Elevator', lat: 22.5726, lng: 88.3639, icon: 'lift.png' }, // Kolkata
+  { name: 'Text Telephones (TTYs)', lat: 13.0827, lng: 80.2707, icon: 'message.png' }, // Chennai
+  { name: 'Handrails', lat: 17, lng: 77, icon: 'handrail.png' }, // New Delhi
+
+  { name: 'Wheelchair Ramp', lat: 24, lng: 57.2090, icon: 'disability.png' }, 
+  { name: 'Accessible Restroom', lat: 20, lng: 85, icon: 'toilet.png' }, 
+  { name: 'Handicap Parking', lat: 22.9734, lng: 78.6569, icon: 'park.png' }, 
+  { name: 'Wheelchair Ramp', lat: 22.2587, lng: 71.1924, icon: 'disability.png' },
+  { name: 'Assistive Listening Devices', lat: 26.4499, lng: 80.3319, icon: 'device.png' }, 
+  { name: 'Accessible Elevator', lat: 25.5941, lng: 85.1376, icon: 'lift.png' }, 
+  { name: 'Text Telephones (TTYs)', lat: 27.1767, lng: 78.0081, icon: 'message.png' }, 
+  { name: 'Handrails', lat: 23.78, lng: 87, icon: 'handrail.png' }, 
+  
+  
+  // Add more aids data for other locations in India
+];
+
+// Add markers for each aid
+aids.forEach(function(aid) {
+  var customIcon = L.icon({
+    iconUrl: aid.icon,
+    iconSize: [32, 32], // Adjust the size of the icon if needed
+    iconAnchor: [16, 16], // Center the icon
+  });
+  
+  var marker = L.marker([aid.lat, aid.lng], { icon: customIcon }).addTo(map);
+  
+  // Add a popup with the name of the aid
+  marker.bindPopup(aid.name);
+  
+  // Open the popup by default
+  marker.openPopup();
+});
+</script>
+
+</body>
+</html>

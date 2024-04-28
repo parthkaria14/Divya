@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Empowering Opportunities for Disabled Individuals</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-image: url('images\\dis3.avif');
+      background-size: cover;
+      background-attachment: fixed;
+      background-position: center;
+      font-family: 'Montserrat', sans-serif;
+      color: #fff;
+      font-size: 18px;
+      transition: font-size 0.3s ease;
+    }
+    body {
+  font-size: 18px; /* Base font size */
+}
+
+.font-increase {
+  cursor: pointer;
+}
+
+.font-decrease {
+  cursor: pointer;
+}
+
+.increased-font {
+  font-size: 20px; /* Increased font size */
+}
+
+.decreased-font {
+  font-size: 16px; /* Decreased font size */
+}
+
+    .navbar {
+      background-color: rgba(0, 0, 0, 0.7);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .navbar-brand {
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: 2px;
+    }
+    .navbar-nav .nav-link {
+      font-size: 16px;
+      font-weight: bold;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 20px auto;
+    }
+    .jumbotron {
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 50px;
+      margin-bottom: 20px;
+      border-radius: 10px;
+      text-align: center;
+      font-size: 36px;
+    }
+    .cta-button {
+      background-color: #f04;
+      color: #fff;
+      padding: 10px 30px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+    }
+    .cta-button:hover {
+      background-color: #d03;
+    }
+    .increased-font {
+      font-size: 22px;
+    }
+    .color-blind {
+    background-color: #6b5b95; /* Purple */
+    color: #feb236; /* Orange */
+}
+    #map {
+      height: 600px;
+      width: 65%; /* Adjust map width */
+      float: left;
+      margin-right: 20px;
+      margin-left: 50px;
+    }
+    .info-container {
+      width: 30%; /* Adjust info container width */
+      float: right;
+    }
+    .info-content {
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 20px;
+      border-radius: 10px;
+      margin-top: 20px;
+    }
+    @media (max-width: 768px) {
+      #map, .info-container {
+        width: 100%; /* Full width on smaller screens */
+        float: none;
+        margin-right: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container">
+      <a class="navbar-brand" href="#">Divya</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <!-- <button class="font-increase">Increase Font</button>
+<button class="font-decrease">Decrease Font</button> -->
+
+      <button id="colorToggleBtn" class="btn btn-outline-light">Toggle Color Scheme</button>
+
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="jobs.php">Jobs</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="blog.html">Blogs</a>
+          </li>
+          
+          <li class="nav-item">
+            <a class="nav-link" href="login.html">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="signup.html">Register</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="jumbotron">
+      <h1 class="display-4">Empowering Opportunities for Disabled Individuals</h1>
+      <p class="lead">Unlock your potential and discover meaningful paths to success. Our platform provides resources, guidance, and support tailored to empower individuals with disabilities.</p>
+      <a class="btn btn-primary btn-lg cta-button" href="#map" role="button">Start Your Journey Now</a>
+    </div>
+  </div>
+
+  <div id="map"></div>
+  <div class="info-container">
+    <div class="info-content">
+      <h2>Accessible Areas</h2>
+      <img src="images\info3.png" alt="" style="display: flex; height:500px; width:auto;">
+    </div>
+  </div>
+
+<!-- Include the Leaflet library -->
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+   
+    document.getElementById('colorToggleBtn').addEventListener('click', function() {
+      document.body.classList.toggle('color-blind');
+    });
+
+    // MAP
+
+    // Initialize the map
+var map = L.map('map').setView([20.5937, 78.9629], 5); // Set the center of the map to India, and zoom level to 5
+
+// Add the OpenStreetMap base layer
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(map);
+
+// Data for aids (name, position, icon)
+var aids = [
+  { name: 'Wheelchair Ramp', lat: 28.6139, lng: 77.2090, icon: 'images/disability.png' }, // New Delhi
+  { name: 'Accessible Restroom', lat: 19.0760, lng: 72.8777, icon: 'images/toilet.png' }, // Mumbai
+  { name: 'Handicap Parking', lat: 17.3850, lng: 78.4867, icon: 'images/park.png' }, // Hyderabad
+  { name: 'Wheelchair Ramp', lat: 30.6139, lng: 85.2090, icon: 'images/disability.png' },
+  { name: 'Assistive Listening Devices', lat: 12.9716, lng: 77.5946, icon: 'images/device.png' }, // Bangalore
+  { name: 'Accessible Elevator', lat: 22.5726, lng: 88.3639, icon: 'images/lift.png' }, // Kolkata
+  { name: 'Text Telephones (TTYs)', lat: 13.0827, lng: 80.2707, icon: 'images/message.png' }, // Chennai
+  { name: 'Handrails', lat: 17, lng: 77, icon: 'images/handrail.png' }, // New Delhi
+
+  { name: 'Wheelchair Ramp', lat: 24, lng: 57.2090, icon: 'images/disability.png' }, 
+  { name: 'Accessible Restroom', lat: 20, lng: 85, icon: 'images/toilet.png' }, 
+  { name: 'Handicap Parking', lat: 22.9734, lng: 78.6569, icon: 'images/park.png' }, 
+  { name: 'Wheelchair Ramp', lat: 22.2587, lng: 71.1924, icon: 'images/disability.png' },
+  { name: 'Assistive Listening Devices', lat: 26.4499, lng: 80.3319, icon: 'images/device.png' }, 
+  { name: 'Accessible Elevator', lat: 25.5941, lng: 85.1376, icon: 'images/lift.png' }, 
+  { name: 'Text Telephones (TTYs)', lat: 27.1767, lng: 78.0081, icon: 'images/message.png' }, 
+  { name: 'Handrails', lat: 23.78, lng: 87, icon: 'images/handrail.png' }, 
+  
+  
+  // Add more aids data for other locations in India
+];
+
+// Add markers for each aid
+aids.forEach(function(aid) {
+  var customIcon = L.icon({
+    iconUrl: aid.icon,
+    iconSize: [32, 32], // Adjust the size of the icon if needed
+    iconAnchor: [16, 16], // Center the icon
+  });
+  
+  var marker = L.marker([aid.lat, aid.lng], { icon: customIcon }).addTo(map);
+  
+  // Add a popup with the name of the aid
+  marker.bindPopup(aid.name);
+  
+  // Open the popup by default
+  marker.openPopup();
+});
+  </script>
+</body>
+</html>

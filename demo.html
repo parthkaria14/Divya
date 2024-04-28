@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Voice Commands Demo</title>
+</head>
+<body onload="startListening()">
+
+<div id="content">
+    <h1>Welcome to My Website</h1>
+    <p>This is a demo of the Voice Commands functionality.</p>
+    <p>You can interact with this page using voice commands.</p>
+    <button id="myButton">Click Me</button>
+</div>
+
+<script>
+var recognition;
+
+function startListening() {
+    recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition || window.msSpeechRecognition)();
+    recognition.lang = 'en-US';
+    recognition.start();
+    
+    recognition.onresult = function(event) {
+        var command = event.results[0][0].transcript.toLowerCase();
+        if(command.includes("read")) {
+            readAloud();
+        } else if(command.includes("click")) {
+            clickButton();
+        } else {
+            alert("Sorry, I didn't understand the command.");
+        }
+    };
+}
+
+function readAloud() {
+    var textContent = document.getElementById('content').textContent || document.getElementById('content').innerText;
+    var utterance = new SpeechSynthesisUtterance(textContent);
+    speechSynthesis.speak(utterance);
+    recognition.stop();
+    startListening(); // Restart recognition
+}
+
+
+function clickButton() {
+    var button = document.getElementById('myButton');
+    var event = new MouseEvent('click', {
+        'view': window,
+        'bubbles': true,
+        'cancelable': true
+    });
+    button.dispatchEvent(event); // Dispatch click event to the button
+   
+    var utterance = new SpeechSynthesisUtterance("Button clicked");
+    speechSynthesis.speak(utterance);
+    recognition.stop();
+    startListening(); // Restart recognition
+}
+</script>
+
+</body>
+</html>
